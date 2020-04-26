@@ -28,6 +28,8 @@ jar {
     }
 }
 
+shadowJar.archiveName = 'app.jar'
+
 task npmInstall(type: Exec) {
     commandLine "npm", "install"
 }
