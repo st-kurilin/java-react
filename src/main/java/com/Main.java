@@ -9,12 +9,12 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class Main {
-    Logger logger = LoggerFactory.getLogger(Main.class);
-    boolean devEnv = true;
-    Gson gson = new Gson();
-    TasksService tasks = new TasksService();
+    private final Logger logger = LoggerFactory.getLogger(Main.class);
+    private final Gson gson = new Gson();
+    private final TasksService tasks = new TasksService();
 
-    public void run(int port){
+    public void run(int port, boolean devEnv){
+        logger.info("Starting server on port {}, devEnv {}", port, devEnv);
         if (devEnv) {
             staticFiles.externalLocation("src/main/resources/static");
         } else {
@@ -51,6 +51,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        new Main().run(8080);
+        int port = Integer.parseInt(System.getProperty("server.port", "8080"));
+        boolean devEnv = Boolean.parseBoolean(System.getProperty("dev"));
+        new Main().run(port, devEnv);
     }
 }
